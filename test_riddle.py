@@ -1,5 +1,6 @@
 import os
 import unittest
+import json
 import run
 from run import app
 from flask import Flask, url_for, session
@@ -31,7 +32,7 @@ class test_run(unittest.TestCase):
     def test_message_can_be_sent(self):
         message = app.test_client(self)
         response = message.get('/<username>/<message>', content_type = 'html/text')
-        self.assertEqual(response.status_code, 200)  
+        self.assertEqual(response.status_code, 302)  
     #test that html pages are rendered
     def test_for_base_html(self):
         base = app.test_client(self)
@@ -50,6 +51,27 @@ class test_run(unittest.TestCase):
         riddle_page = app.test_client(self)
         response = riddle_page.get('/<username>', content_type = 'html/text')
         self.assertIn('Welcome', response.data)
+        #test users text file takes data this fails if the file is empty
+    def test_check_user_file_is_storing_username(self):
+        with open("data/users.txt", "r") as file:
+            lines = file.read().splitlines()
+            self.assertGreater(len(lines), 0)
+    def test_data_file_loads(self):
+        with open("data/riddles.json", "r") as json_data:
+            data = json.load(json_data)
+        self.assertGreater(len(data), 0)
+     #test that riddle form loads
+    def test_riddle_form(self):
+        riddle_form = app.test_client(self)
+        response = riddle_form.get('/<username>', content_type = 'html/text')
+        self.assertIn("Write guess here", response.data)
+        #test that counter works
+    # d
+        
+
+
+
+   
    
 if __name__ == '__main__':
     unittest.main(verbosity = 2)       

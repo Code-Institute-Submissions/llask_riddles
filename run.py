@@ -50,21 +50,17 @@ def index():
         return redirect(request.form["username"])
     return render_template("index.html")
 
- 
 @app.route('/<username>', methods=["GET", "POST"])
 def user(username):
-    """Display game messages for the user"""
-    #sut up list to hold the data once file opened
+    """Display chat messages for the user"""
     data = []
     with open("data/riddles.json", "r") as json_data:
         data = json.load(json_data)
-    #set variables used in the game
     riddle_counter = 0
     total_riddles = len(data)
     numRight = 0
     numWrong = 0
     score = 0
-   
     if request.method == "POST":
         write_to_file("data/users.txt", username + "\n")
         # use a counter to pass in the riddles into the text-area
@@ -73,14 +69,32 @@ def user(username):
         guess = request.form["message"].lower()
         # Compare the guess with actual answer
         if data[riddle_counter]["answer"] == guess:
-            numRight += 1
+            numRight += 1 
             # with correct answer flash a message and continue to next riddle
             if request.method == "POST":
-                flash("Well Done! You got that one correct")
-            riddle_counter += 1
-        
+                flash("Well Done! You got that one correct", 'alert alert-success')
+            #riddle_counter += 1
+        else:
+            # with incorrect answer log the wrong guess and flash a message
+            add_messages(username, guess + "\n")
+            numWrong -= 1 
+            if request.method == "POST":
+                flash("Oh Dear! You got that one wrong.You guessed {}, the answer is {}".format(
+                    request.form["message"], data[riddle_counter]["answer"]), 'alert alert-danger')
+        riddle_counter += 1
+        score = (numRight + numWrong)
+        write_to_file("data/scores.txt", username)
+        add_scores(score)
+        tot_scores(username, score)
+        #exit from the game on completion
+        if request.method == "POST":
+            if riddle_counter == total_riddles:
+                flash("Game Over! That brings us to the end of this session of riddles. Thank you for playing.", "alert alert-info")
+                return render_template("leader_board.html")
+    messages = get_all_messages()
     return render_template("answer_riddles.html",
-                            username=username,  riddles_data=data, riddle_counter=riddle_counter, score=score)
+                            username=username, game_messages=messages, riddles_data=data, riddle_counter=riddle_counter, score=score) 
+
 @app.route('/<username>/<message>')
 def send_message(username, message):
     """Create a new message and redirect back to the game page"""

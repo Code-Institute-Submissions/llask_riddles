@@ -5,7 +5,7 @@ import json
 from flask import Flask, redirect, render_template, request, flash, url_for, session, jsonify
 
 app = Flask(__name__)
-
+app.secret_key = 'some_secret'
 data = []
 
 def write_to_file(filename, data):
@@ -27,6 +27,18 @@ def get_all_messages():
     with open("data/messages.txt", "r") as game_messages:
         messages = game_messages.readlines()
     return messages
+    
+def add_scores(score):
+    """  Add scores to the `scores` text file"""
+    write_to_file("data/scores.txt", " - {0} - {1}\n".format(
+        datetime.now().strftime("(%Y-%m-%d)(%H:%M:%S)"),
+            score))
+    
+def tot_scores(username, score):
+        with open("data/tot_scores.txt", "a") as file:
+            file.writelines(str(username) + "\n")
+            file.writelines(str(score) + "\n")
+
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -52,11 +64,23 @@ def user(username):
     numRight = 0
     numWrong = 0
     score = 0
-    
+   
     if request.method == "POST":
         write_to_file("data/users.txt", username + "\n")
+        # use a counter to pass in the riddles into the text-area
+        riddle_counter = int(request.form["riddle_counter"])
+        # get the input from the user. Use lower method to format strings with capitals to lowercase
+        guess = request.form["message"].lower()
+        # Compare the guess with actual answer
+        if data[riddle_counter]["answer"] == guess:
+            numRight += 1
+            # with correct answer flash a message and continue to next riddle
+            if request.method == "POST":
+                flash("Well Done! You got that one correct")
+            riddle_counter += 1
+        
     return render_template("answer_riddles.html",
-                            username=username, riddles_data=data, riddle_counter=riddle_counter)
+                            username=username,  riddles_data=data, riddle_counter=riddle_counter, score=score)
 @app.route('/<username>/<message>')
 def send_message(username, message):
     """Create a new message and redirect back to the game page"""
@@ -66,7 +90,9 @@ def send_message(username, message):
 @app.route('/leader_board', methods=["GET", "POST"])
 def leader_board():
     return render_template("leader_board.html")
-    
+# def widget(length,width):
+#     length =50
+#     width = 50
    
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP', '0.0.0.0'), port=int(os.environ.get('PORT', 0)), debug=True)

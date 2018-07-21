@@ -3,7 +3,7 @@ import unittest
 import json
 import run
 from run import app
-from flask import Flask, url_for, session
+from flask import Flask, url_for, request
 
 class test_run(unittest.TestCase):
     """
@@ -11,7 +11,6 @@ class test_run(unittest.TestCase):
     """
     #return a flask instance
     def create_app(self):
-
         app = Flask(__name__)
         app.config['TESTING'] = True
         return app
@@ -66,24 +65,54 @@ class test_run(unittest.TestCase):
         response = riddle_form.get('/<username>', content_type = 'html/text')
         self.assertIn("Write guess here", response.data)
         #test that counter works
-    # d
+    def test_riddle_counter(self):
+        riddle_counter = app.test_client(self)
+        self.assertGreaterEqual(riddle_counter, 0)
+        # test that text files are functioning
+    def test_check_data_is_in_scores_file(self):
+        with open("data/scores.txt", "r") as file:
+            score = file.read().splitlines()
+            self.assertIn("1", (str(score)))
+    def test_check_data_is_in_tot_scores_file(self):
+        with open("data/tot_scores.txt", "r") as file:
+            score = file.read().splitlines()
+            self.assertIn("1", (str(score)))    
+   
+    # def test_check_tot_scores_file_is_storing_scores(self):
+    #     data = run.tot_scores("bob", "1")
+    #     self.assertIn("1", str(data))    
         
+        
+        
+        
+        
+        
+        
+    # def test_check_message_file_is_storing_wrong_guesses(self):
+    #     wrongGuess = run.get_all_messages()
+    #     self.assertGreater(len(wrongGuess), 0)
+     #alternatively use test below 
+    # def test_check_message_file_is_storing_wrong_guesses(self):
+    #     with open("data/messages.txt", "r") as file:
+    #         wrongGuess = file.read().splitlines()
+    #         self.assertGreater(len(wrongGuess), 0)
+    #     #alternatively use test below to prevent data being added
+    
+        
+        
+        
+        
+        
+        
+     # def test_check_tot_scores_file_is_storing_scores(self):
+    #     with open("data/tot_scores.txt", "r") as file:
+    #         lines = file.read().splitlines()
+            #  self.assertIn(str(1), lines )
+    #       
+            # def test_guess_right(self):
+    #     guess = run.user(self)
+    #     self.assertEqual(guess(), '56')
 
-
-
-   
-   
 if __name__ == '__main__':
     unittest.main(verbosity = 2)       
 
-# @app.route('/post/')
-# def new_post(self):
-#   if storage.create_post(request.form['post']):
-#     flash(u'Post added')
-#     return redirect(url_for('home'))
-#   return render_template('new-post.html')
-#   def should_flash_a_success_message(self):
-#   response = self.client.post('/post/', data=self.valid_post_data,
-#                               follow_redirects=True)
-
-#   assert 'Post added' in response.data

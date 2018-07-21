@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 import json
 from flask import Flask, redirect, render_template, request, flash, url_for, session, jsonify
+from operator import itemgetter, attrgetter
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -35,14 +36,36 @@ def add_scores(score):
             score))
     
 def tot_scores(username, score):
-        with open("data/tot_scores.txt", "a") as file:
-            file.writelines(str(username) + "\n")
-            file.writelines(str(score) + "\n")
-
+    with open("data/tot_scores.txt", "a") as file:
+        file.writelines(str(username) + "\n")
+        file.writelines(str(score) + "\n")
+            
+def get_scores():
+    usernames = []
+    scores = []
+    """ Open the tot_scores.txt file and split each line"""
+    with open("data/tot_scores.txt", "r") as file:
+        lines = file.read().splitlines()
+    """ Add the scores (on each even number line) to the empty score list"""
+    """ Add the usernames (on each odd number line) to the empty username list """
+    for i, text in enumerate(lines):
+        if i % 2 ==0:
+            usernames.append(text)
+        else:
+            scores.append(text)
+    """ Zip the two lists into a tuple, convert into a dictionary for grouping by key,
+    sum the values by username and sort into descending order"""
+    userScores = zip(usernames, scores)
+    dict = {x:0 for x,_ in userScores}
+    for username, score in userScores: 
+        dict[username] += int(score)
+        result = map(tuple, dict.items())
+    sorted_by_value = sorted(result,key=itemgetter(1), reverse=True)
+    return sorted_by_value
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    """7 Main page with instructions"""
+    """Main page with instructions"""
     # Handle POST request
     if request.method == "POST":
         write_to_file("data/users.txt", request.form["username"] + "\n")
@@ -52,18 +75,19 @@ def index():
 
 @app.route('/<username>', methods=["GET", "POST"])
 def user(username):
-    """Display chat messages for the user"""
+    """Display riddles for the user and post data to text files"""
     data = []
     with open("data/riddles.json", "r") as json_data:
         data = json.load(json_data)
     riddle_counter = 0
+    #the total riddles variable will also be used to end the game
     total_riddles = len(data)
     numRight = 0
     numWrong = 0
     score = 0
     if request.method == "POST":
         write_to_file("data/users.txt", username + "\n")
-        # use a counter to pass in the riddles into the text-area
+        # use a counter to pass in the riddles into the text-area; the counter will also be used to end the game
         riddle_counter = int(request.form["riddle_counter"])
         # get the input from the user. Use lower method to format strings with capitals to lowercase
         guess = request.form["message"].lower()
@@ -73,7 +97,6 @@ def user(username):
             # with correct answer flash a message and continue to next riddle
             if request.method == "POST":
                 flash("Well Done! You got that one correct", 'alert alert-success')
-            #riddle_counter += 1
         else:
             # with incorrect answer log the wrong guess and flash a message
             add_messages(username, guess + "\n")
@@ -101,13 +124,11 @@ def send_message(username, message):
     add_messages(username, message)
     return redirect(username)
     
-@app.route('/leader_board', methods=["GET", "POST"])
+@app.route('/leaderboard')
 def leader_board():
-    return render_template("leader_board.html")
-# def widget(length,width):
-#     length =50
-#     width = 50
-   
+    sorted_by_value = get_scores()
+    return render_template("leader_board.html", sorted_by_value=sorted_by_value)
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP', '0.0.0.0'), port=int(os.environ.get('PORT', 0)), debug=True)
 

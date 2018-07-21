@@ -76,11 +76,8 @@ class test_run(unittest.TestCase):
     def test_check_data_is_in_tot_scores_file(self):
         with open("data/tot_scores.txt", "r") as file:
             score = file.read().splitlines()
-            self.assertIn("1", (str(score)))    
+            self.assertIn("1", (str(score)))
    
-    # def test_check_tot_scores_file_is_storing_scores(self):
-    #     data = run.tot_scores("bob", "1")
-    #     self.assertIn("1", str(data))    
         
         
         

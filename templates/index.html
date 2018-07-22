@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block content %}
+<!--show some basic instructions-->
+<div class="row instructions">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="instruction">
+                <h2 class= "instruction-title text-center">
+                    Welcome to the 'Riddle Me This' Guessing Game
+                </h2>
+                <h3 class="instruction-subtitle text-center green">
+                    Answer some Riddles and Score some Points
+                </h3>
+        </div>
+        <hr>
+        <div class="text-center">
+                <h3 class="text-center red">
+                    Beware though as a negative answer means points deducted.
+                </h3>
+        </div>
+        <hr>
+         <!--present username sign in form-->
+        <div>
+                <h2 class ="text-center blue">In order to play you must provide your username in the box below</h2>
+                <h3 class = "text-center yellow">Then Hit the Button to Commence the Game and Good Luck!</h3>
+        </div>
+        <hr>
+            
+            <form method="POST" class = "form-group text-center">
+                <label for="username">Enter Username:</label>
+                 <input type="text" autocomplete="off" id="username" name="username" placeholder="Enter name 5 to 25 characters" min = "5" max = "25">
+                <button>Go to Game!</button>
+            </form>
+    
+    </div>
+</div>
+
+{% endblock %}

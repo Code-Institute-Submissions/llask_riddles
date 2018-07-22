@@ -1,0 +1,50 @@
+body {
+  background-color: FloralWhite;
+}
+.col-md-5 img {
+    width: 100%;
+}
+background-image: {
+    max-width: 100%;
+    display: block;
+    background-size: contain;
+}
+footer {
+  background-color: #EAF2F8; 
+}
+.instructions, .riddle-question {
+    background-color: #F8F8FF;
+    margin: auto;
+}
+.table-responsive {
+    background-color: white;
+}
+.table-guesses {
+    max-width: 60%;
+    margin: auto;
+}
+.feedback {
+    font-size: 20px;
+}
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+.yellow {
+    color: GoldenRod;
+}
+.blue {
+    color: CornflowerBlue;
+}
+a.nav-link {
+    font-size: 20px;
+}
+#riddle {
+    color: GoldenRod;
+    font-size: 20px;
+}
+::placeholder {
+    color: CadetBlue;
+}

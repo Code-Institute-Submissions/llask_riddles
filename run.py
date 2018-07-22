@@ -105,7 +105,7 @@ def user(username):
             numWrong -= 1 
             score = numWrong
             if request.method == "POST":
-                flash("Oh Dear! You got that one wrong.You guessed {}, the answer is {}".format(
+                flash("Oh Dear! You got that one wrong.You guessed {}: the answer is {}".format(
                     request.form["message"], data[riddle_counter]["answer"]), 'alert alert-danger')
         riddle_counter += 1
         score = score

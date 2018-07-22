@@ -1,4 +1,4 @@
-#import various modules and files that provide functionality to the programme
+#import various modules that provide functionality to the programme
 import os
 from datetime import datetime
 import json
@@ -15,26 +15,26 @@ def write_to_file(filename, data):
             file.writelines(data)
         
 def add_messages(username, message):
-    """Add messages to the messages text file"""
-    #add a date/timestamp and separate them with a line break
-    write_to_file("data/messages.txt", "({0}) {1} - {2}\n".format(
+    """Add wrong guesses to the messages text file"""
+    #add a date/timestamp to maintain an historical record
+    write_to_file("data/messages.txt", "({0}) {1} - {2}".format(
             datetime.now().strftime("(%Y-%m-%d)(%H:%M:%S)"),
             username.title(),
             message))
             
 def get_all_messages():
-    """Get all of the messages"""
+    """Get all of the messages for routing to the answer riddle page"""
     messages = []
     with open("data/messages.txt", "r") as game_messages:
         messages = game_messages.readlines()
     return messages
     
 def add_scores(score):
-    """  Add scores to the `scores` text file"""
+    """ Add scores with timestamp to the scores.text file to maintain an overall user score record"""
     write_to_file("data/scores.txt", " - {0} - {1}\n".format(
         datetime.now().strftime("(%Y-%m-%d)(%H:%M:%S)"),
             score))
-    
+    """  Add usernames and scores to the tot_scores.text file for routing to the leaderboard"""
 def tot_scores(username, score):
     with open("data/tot_scores.txt", "a") as file:
         file.writelines(str(username) + "\n")
@@ -46,15 +46,15 @@ def get_scores():
     """ Open the tot_scores.txt file and split each line"""
     with open("data/tot_scores.txt", "r") as file:
         lines = file.read().splitlines()
-    """ Add the scores (on each even number line) to the empty score list"""
-    """ Add the usernames (on each odd number line) to the empty username list """
     for i, text in enumerate(lines):
+        # Add the usernames (on even lines) to the empty score list
         if i % 2 ==0:
             usernames.append(text)
         else:
+            # Add the scores (on odd lines) to the empty username list
             scores.append(text)
     """ Zip the two lists into a tuple, convert into a dictionary for grouping by key,
-    sum the values by username and sort into descending order"""
+    sum the values by username and sort into highset first"""
     userScores = zip(usernames, scores)
     dict = {x:0 for x,_ in userScores}
     for username, score in userScores: 
@@ -65,7 +65,7 @@ def get_scores():
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    """Main page with instructions"""
+    """Home page with sign in and game instructions"""
     # Handle POST request
     if request.method == "POST":
         write_to_file("data/users.txt", request.form["username"] + "\n")
@@ -79,6 +79,7 @@ def user(username):
     data = []
     with open("data/riddles.json", "r") as json_data:
         data = json.load(json_data)
+    #set up variables used
     riddle_counter = 0
     #the total riddles variable will also be used to end the game
     total_riddles = len(data)
@@ -94,6 +95,7 @@ def user(username):
         # Compare the guess with actual answer
         if data[riddle_counter]["answer"] == guess:
             numRight += 1 
+            score = numRight
             # with correct answer flash a message and continue to next riddle
             if request.method == "POST":
                 flash("Well Done! You got that one correct", 'alert alert-success')
@@ -101,11 +103,12 @@ def user(username):
             # with incorrect answer log the wrong guess and flash a message
             add_messages(username, guess + "\n")
             numWrong -= 1 
+            score = numWrong
             if request.method == "POST":
                 flash("Oh Dear! You got that one wrong.You guessed {}, the answer is {}".format(
                     request.form["message"], data[riddle_counter]["answer"]), 'alert alert-danger')
         riddle_counter += 1
-        score = (numRight + numWrong)
+        score = score
         write_to_file("data/scores.txt", username)
         add_scores(score)
         tot_scores(username, score)

@@ -118,7 +118,7 @@ def user(username):
                 flash("Game Over! That brings us to the end of this session of riddles. Thank you for playing.", "alert alert-info")
                 return render_template("leader_board.html")
     messages = get_all_messages()
-    return render_template("answer_riddles.html",
+    return render_template("answer_riddles.html", scroll = "return_here",
                             username=username, game_messages=messages, riddles_data=data, riddle_counter=riddle_counter, score=score) 
 
 @app.route('/<username>/<message>')

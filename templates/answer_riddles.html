@@ -12,6 +12,7 @@
             <!--use a riddle counter to cycle through the riddles in the data file and present to user-->
                      <label for="riddle_counter">Riddle Counter:</label>   
                      <input type="text" id="riddle_counter" placeholder = "Riddle Counter" maxlength="4" size="4" name="riddle_counter" readonly value = "{{ riddle_counter }}">
+                      <!--arrive at riddle form when rendered html template returned-->
                     </div>
                      <div class = "col-sm-5"><input type="text" class = "form-control" autocomplete="off" placeholder = "Write guess here, then click button or hit enter" id="message" name="message"></div>
                      <div class = "col-sm-3"><button class = "btn btn-info">Guess the Riddle!</button></div>
@@ -37,7 +38,12 @@
 <!-- wrong guesses section -->
 <div class = "row">
     <div class="col-sm-12">
-        <h4 class="table-header text-center red">Wrong Guesses</h4>
+        <h4 class="table-header text-center red" id = "return_here">Wrong Guesses</h4>
+         {% if scroll %}
+            <script>
+                document.getElementById('{{ scroll }}').scrollIntoView();
+                </script>
+            {% endif %}
  <!-- wrong guess list showing date/time user and wrong guess-->
     <div class="table-responsive table-guesses">          
           <table class="table text-center">

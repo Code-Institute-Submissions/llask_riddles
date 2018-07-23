@@ -31,7 +31,7 @@ class test_run(unittest.TestCase):
     def test_message_can_be_sent(self):
         message = app.test_client(self)
         response = message.get('/<username>/<message>', content_type = 'html/text')
-        self.assertEqual(response.status_code, 302)  
+        self.assertEqual(response.status_code, 200)  
     #test that html pages are rendered
     def test_for_base_html(self):
         base = app.test_client(self)

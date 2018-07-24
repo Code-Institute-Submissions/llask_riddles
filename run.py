@@ -34,6 +34,7 @@ def add_scores(score):
     write_to_file("data/scores.txt", " - {0} - {1}\n".format(
         datetime.now().strftime("(%Y-%m-%d)(%H:%M:%S)"),
             score))
+            
     """  Add usernames and scores to the tot_scores.text file for routing to the leaderboard"""
 def tot_scores(username, score):
     with open("data/tot_scores.txt", "a") as file:
@@ -88,7 +89,7 @@ def user(username):
     score = 0
     if request.method == "POST":
         write_to_file("data/users.txt", username + "\n")
-        # use a counter to pass in the riddles into the text-area; the counter will also be used to end the game
+        # use a counter to track the riddles in the text-area; the counter will also be used to end the game
         riddle_counter = int(request.form["riddle_counter"])
         # get the input from the user. Use lower method to format strings with capitals to lowercase
         guess = request.form["message"].lower()

@@ -17,10 +17,13 @@ the look and feel of the game.
 Pencil wireframe was used to sketch out a final representation of what was desired in the browser and the
 wireframes (pencil1, pencil2 and pencil3) are included in the additional-info folder.
 A TDD approach was used to set up the views and routes and establish that the text files were reading and
-writing data. A test logic file is included in the additional_info folder illustrating the approach
-used. The unittest module was used in the test methods. It was noted that if there is no data in the 
-text files, then certain tests will fail. It was also noted that each time the unit tests are run, 
-message data is added to the text files.
+writing data. A test logic notes file is included in the additional_info folder illustrating the approach
+used. The unittest module was used in the test methods. It is noted that if there is no data in the 
+text files, then certain tests will fail. During testing it was also noted that each time the unit tests 
+were run, message data is added to the scores and messages text files. Tests for the scores files were
+re-done using another metod so now there is only blank data added to the message text file. There is a 
+message in the test file stating that it should be removed after testing. These messages will be visible
+in the wrong guesses table on the user riddle page.
 The routes and views were established to allow game related messages to be sent between the urls. The 
 messages are stored as strings in a list in text files using append. These are then outputted to the 
 browser in the form of a string. In the case of the leader board the data is further analysed to break 

@@ -9,7 +9,7 @@
                 <h3><textarea class="form-control text-center" rows="3" id="riddle">{{ riddles_data[riddle_counter]["riddle"] }}</textarea></h3>
                <div class = "row">
                    <div class = "col-sm-4">
-            <!--use a riddle counter to cycle through the riddles in the data file and present to user-->
+            <!--set the riddle counter which will end the game when equal to the total number of riddles in the data-->
                      <label for="riddle_counter">Riddle Counter:</label>   
                      <input type="text" id="riddle_counter" placeholder = "Riddle Counter" maxlength="4" size="4" name="riddle_counter" readonly value = "{{ riddle_counter }}">
                       <!--arrive at riddle form when rendered html template returned-->

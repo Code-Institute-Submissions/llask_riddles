@@ -12,6 +12,10 @@ background-image: {
 footer {
   background-color: #EAF2F8; 
 }
+
+.nav-link {
+    font-size: 16px;
+}
 .instructions, .riddle-question {
     background-color: #F8F8FF;
     margin: auto;

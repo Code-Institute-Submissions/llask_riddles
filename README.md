@@ -21,9 +21,9 @@ writing data. A test logic notes file is included in the additional_info folder 
 used. The unittest module was used in the test methods. It is noted that if there is no data in the 
 text files, then certain tests will fail. During testing it was also noted that each time the unit tests 
 were run, message data is added to the scores and messages text files. Tests for the scores files were
-re-done using another metod so now there is only blank data added to the message text file. There is a 
+re-done using another method so now there is only blank data added to the message text file. There is a 
 message in the test file stating that it should be removed after testing. These messages will be visible
-in the wrong guesses table on the user riddle page.
+in the wrong guesses table on the user riddle page, if not removed.
 The routes and views were established to allow game related messages to be sent between the urls. The 
 messages are stored as strings in a list in text files using append. These are then outputted to the 
 browser in the form of a string. In the case of the leader board the data is further analysed to break 

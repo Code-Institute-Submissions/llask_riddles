@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 import json
 from flask import Flask, redirect, render_template, request, flash, url_for, session, jsonify
-from operator import itemgetter, attrgetter
+from operator import itemgetter
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'

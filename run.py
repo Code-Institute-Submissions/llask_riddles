@@ -62,8 +62,7 @@ def get_scores():
     dict = {x:0 for x,_ in userScores}
     for username, score in userScores: 
         dict[username] += int(score)
-        result = map(tuple, dict.items())
-    sorted_by_value = sorted(result,key=itemgetter(1), reverse=True)
+    sorted_by_value =sorted(map(tuple, dict.items()),key=itemgetter(1), reverse=True)
     return sorted_by_value
 @app.route('/', methods=["GET", "POST"])
 def index():

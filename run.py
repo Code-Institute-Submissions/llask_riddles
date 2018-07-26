@@ -46,6 +46,7 @@ def tot_scores(username, score):
 def get_scores():
     usernames = []
     scores = []
+
     """ Open the tot_scores.txt file and split each line"""
     with open("data/tot_scores.txt", "r") as file:
         lines = file.read().splitlines()
@@ -62,8 +63,10 @@ def get_scores():
     dict = {x:0 for x,_ in userScores}
     for username, score in userScores: 
         dict[username] += int(score)
-    sorted_by_value =sorted(map(tuple, dict.items()),key=itemgetter(1), reverse=True)
+        result = map(tuple, dict.items())
+        sorted_by_value = sorted(result,key=itemgetter(1), reverse=True)
     return sorted_by_value
+    
 @app.route('/', methods=["GET", "POST"])
 def index():
     """Home page with sign in and game instructions"""

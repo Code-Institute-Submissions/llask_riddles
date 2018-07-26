@@ -6,6 +6,7 @@
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clean-blog.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css" />
+ 
 </head>
 
 <body>
@@ -32,7 +33,7 @@
     </nav>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('static/img/question-mark-2546106_960_720.jpg')">
+    <header class="masthead img-responsive" style="background-image: url('static/img/question-mark-2546106_960_720.jpg')">
     <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -70,8 +71,11 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
-<!--use long polling to refresh the page so all users see new messages without doing a manual refresh-->
- 
+ <script>
+        setTimeout(function() {
+            location.reload();
+        }, 10000);
+    </script>
 </body>
 
 </html>

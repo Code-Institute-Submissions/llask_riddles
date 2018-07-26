@@ -12,9 +12,8 @@
             <!--set the riddle counter which will end the game when equal to the total number of riddles in the data-->
                      <label for="riddle_counter">Riddle Counter:</label>   
                      <input type="text" id="riddle_counter" placeholder = "Riddle Counter" maxlength="4" size="4" name="riddle_counter" readonly value = "{{ riddle_counter }}">
-                     
                     </div>
-                     <div class = "col-sm-5"><input type="text" class = "form-control" autocomplete="off" placeholder = "Write guess here, then click button or hit enter" id="message" name="message"></div>
+                     <div class = "col-sm-5"><input type="text" class = "form-control" autocomplete="off" placeholder = "Write guess here, then click button or hit enter" id="message" name="message" pattern="[a-zA-Z0-9]{1,}"></div>
                      <div class = "col-sm-3"><button class = "btn btn-info">Guess the Riddle!</button></div>
                 </div>
           </div>
@@ -34,17 +33,18 @@
     <div class = "individ_score">
        <h4 class = "blue" >On this one you scored  {{ score }}</h4><br>
     </div>
-
+<!--------scroll to the riddle question------->
+ <script>
+    function scrollWin() {
+    window.scrollTo(600, 1000);
+    }
+    scrollWin();
+</script>  
+       
 <!-- wrong guesses section -->
 <div class = "row">
     <div class="col-sm-12">
         <h4 class="table-header text-center red" id = "return_here">Wrong Guesses</h4>
-         <!--arrive at riddle form when rendered html template returned-->
-         {% if scroll %}
-            <script>
-                document.getElementById('{{ return_here }}').scrollIntoView();
-                </script>
-            {% endif %}
  <!-- wrong guess list showing date/time user and wrong guess-->
     <div class="table-responsive table-guesses">          
           <table class="table text-center">

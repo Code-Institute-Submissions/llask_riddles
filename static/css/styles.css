@@ -6,8 +6,14 @@ body {
 }
 background-image: {
     max-width: 100%;
+    height: auto;
     display: block;
-    background-size: contain;
+    background-size: cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
 }
 footer {
   background-color: #EAF2F8; 
@@ -16,12 +22,16 @@ footer {
 .nav-link {
     font-size: 16px;
 }
+.form-group {
+    margin: 0;
+}
 .instructions, .riddle-question {
     background-color: #F8F8FF;
     margin: auto;
 }
 .table-responsive {
     background-color: white;
+    margin: 0;
 }
 .table-guesses {
     max-width: 60%;

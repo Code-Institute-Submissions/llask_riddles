@@ -1,9 +1,11 @@
 #import various modules that provide functionality to the programme
+#-*- coding: utf-8 -*-
 import os
 from datetime import datetime
 import json
 from flask import Flask, redirect, render_template, request, flash, url_for, session, jsonify
 from operator import itemgetter
+import io
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -34,26 +36,26 @@ def add_scores(score):
     write_to_file("data/scores.txt", " - {0} - {1}\n".format(
         datetime.now().strftime("(%Y-%m-%d)(%H:%M:%S)"),
             score))
-            
+
     """  Add usernames and scores to the tot_scores.text file for routing to the leaderboard"""
 def tot_scores(username, score):
     with open("data/tot_scores.txt", "a") as file:
         file.writelines(str(username) + "\n")
         file.writelines(str(score) + "\n")
-            
+        
 def get_scores():
     usernames = []
     scores = []
     """ Open the tot_scores.txt file and split each line"""
     with open("data/tot_scores.txt", "r") as file:
         lines = file.read().splitlines()
-    for i, text in enumerate(lines):
-        # Add the usernames (on even lines) to the empty score list
-        if i % 2 ==0:
-            usernames.append(text)
-        else:
-            # Add the scores (on odd lines) to the empty username list
-            scores.append(text)
+        for i, text in enumerate(lines):
+            # Add the usernames (on even lines) to the empty score list
+            if i % 2 ==0:
+                usernames.append(text)
+            else:
+                # Add the scores (on odd lines) to the empty username list
+                scores.append(text)
     """ Zip the two lists into a tuple, convert into a dictionary for grouping by key,
     sum the values by username and sort into highset first"""
     userScores = zip(usernames, scores)
@@ -63,7 +65,6 @@ def get_scores():
         result = map(tuple, dict.items())
     sorted_by_value = sorted(result,key=itemgetter(1), reverse=True)
     return sorted_by_value
-
 @app.route('/', methods=["GET", "POST"])
 def index():
     """Home page with sign in and game instructions"""

@@ -46,14 +46,14 @@ def tot_scores(username, score):
 def get_scores():
     usernames = []
     scores = []
-
+    global sorted_by_value
     """ Open the tot_scores.txt file and split each line"""
     with open("data/tot_scores.txt", "r") as file:
         lines = file.read().splitlines()
         for i, text in enumerate(lines):
             # Add the usernames (on even lines) to the empty score list
             if i % 2 ==0:
-                usernames.append(text)
+                 usernames.append(text)
             else:
                 # Add the scores (on odd lines) to the empty username list
                 scores.append(text)

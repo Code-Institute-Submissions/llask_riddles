@@ -109,3 +109,6 @@ The riddles used in this application were adapted from http://www.doriddles.com/
 Do Riddles site and https://riddlesbrainteasers.com/less-see/ Riddles Brain Teasers site, 
 both of which display riddles submitted by the general public. No terms were dictated for 
 the use of riddles.
+DEPLOYMENT: This project is deployed on:
+https://flask-riddles.herokuapp.com/
+https://github.com/vmcggh18/llask_riddles

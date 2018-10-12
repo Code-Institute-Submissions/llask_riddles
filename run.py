@@ -60,17 +60,10 @@ def get_scores():
     """ Zip the two lists into a tuple, convert into a dictionary for grouping by key,
     sum the values by username and sort into highset first"""
     userScores = zip(usernames, scores)
-    #try this code on heroku
+    # this code works on heroku
     sorted_by_value = [(k, sum(map(itemgetter(1), g)))
        for k, g in groupby(sorted(userScores, key=itemgetter(0)), key=itemgetter(0))]
     sorted_by_value.sort(key=lambda tup: tup[1], reverse=True)  # sort in place
-    #code below works until deployed on heroku.
-    #then throws an unbound error
-    # dict = {x:0 for x,_ in userScores}
-    # for username, score in userScores: 
-    #     dict[username] += int(score)
-    #     result = map(tuple, dict.items())
-    #     sorted_by_value = sorted(result,key=itemgetter(1), reverse=True)
     return sorted_by_value
     
 @app.route('/', methods=["GET", "POST"])

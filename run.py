@@ -58,7 +58,7 @@ def get_scores():
                 # Add the scores (on odd lines) to the empty username list
                 scores.append(int(text))
     """ Zip the two lists into a tuple, convert into a dictionary for grouping by key,
-    sum the values by username and sort into highset first"""
+    sum the values by username and sort into highest first"""
     userScores = zip(usernames, scores)
     # this code works on heroku
     sorted_by_value = [(k, sum(map(itemgetter(1), g)))

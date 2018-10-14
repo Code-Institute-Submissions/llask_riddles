@@ -181,10 +181,18 @@ The sources below provided inspiration for this application:
 Code Institute Module 7 Practical Python 
 #### Other Documentation Consulted ####
 [flask:](http://flask.pocoo.org/)  
+Overview of flask  
 [Accept only requested input from user on a form:](https://stackoverflow.com/questions/16434174/only-allow-certain-characters-to-be-entered-in-html-textinput)  
+Using the pattern attribute to restrict chatacters used in forms.  
 [Sorting tuples in a list:](https://stackoverflow.com/questions/39734549/sum-numbers-by-letter-in-list-of-tuples)  
-[Script for scrolling:](https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_scrollto2)    
+How to Zip two lists into a tuple, convert into a dictionary for grouping by key, sum the values by username and 
+sort into highest first  
+[Script for scrolling:](https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_scrollto2)  
+Using javascript to scroll to a particular section of a page  
 [Unittest Framework](https://docs.python.org/3/library/unittest.html)  
+Use of the unittest module for automated testing  
 [Flask Message Flashing](http://flask.pocoo.org/docs/0.12/patterns/flashing/)  
-[Jinja Template Engine](http://jinja.pocoo.org/)  
+Flashing a message in html  
+[Jinja Template Engine](http://jinja.pocoo.org/)    
+Overview of the jinga template methods and use of with categories when flashing
 

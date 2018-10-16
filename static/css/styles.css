@@ -1,9 +1,6 @@
 body {
   background-color: FloralWhite;
 }
-.col-md-5 img {
-    width: 100%;
-}
 background-image: {
     max-width: 100%;
     height: auto;
@@ -18,17 +15,25 @@ background-image: {
 footer {
   background-color: #EAF2F8; 
 }
-
-.nav-link {
-    font-size: 16px;
+/* navigation home link font size */
+.navbar-brand {
+    font-size: 24px;
 }
+
+/* forms margin style */
 .form-group {
     margin: 0;
 }
+/* home page instruction and riddle question background styles */
 .instructions, .riddle-question {
     background-color: #F8F8FF;
     margin: auto;
 }
+/* riddle question submit button */
+.btn-info{
+    border-radius: 50px;
+}
+/* table formats */
 .table-responsive {
     background-color: white;
     margin: 0;
@@ -37,9 +42,11 @@ footer {
     max-width: 60%;
     margin: auto;
 }
+/* flashed text */
 .feedback {
     font-size: 20px;
 }
+/* home page instruction text colors */
 .green {
     color: green;
 }
@@ -52,13 +59,15 @@ footer {
 .blue {
     color: CornflowerBlue;
 }
-a.nav-link {
-    font-size: 20px;
-}
+/* color style for riddle */
 #riddle {
     color: GoldenRod;
     font-size: 20px;
 }
+/* placeholder text color */
 ::placeholder {
+    color: CadetBlue;
+}
+.form-control::placeholder {
     color: CadetBlue;
 }
